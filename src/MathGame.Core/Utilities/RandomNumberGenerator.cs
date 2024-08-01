@@ -2,7 +2,7 @@ namespace MathGame.Core.Utilities;
 
 public class RandomNumberGenerator : IRandomNumberGenerator
 {
-    private Random rng;
+    private readonly Random rng;
 
     public RandomNumberGenerator() => rng = new Random();
     public RandomNumberGenerator(int seed) => rng = new Random(seed);

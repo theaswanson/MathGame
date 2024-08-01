@@ -4,15 +4,8 @@ using MathGame.Core.Utilities;
 
 namespace MathGame.Core;
 
-public class GameResults
+public class GameResults(IConsole console)
 {
-    private readonly IConsole console;
-
-    public GameResults(IConsole console)
-    {
-        this.console = console;
-    }
-
     public void Print(IDictionary<int, QuestionResult> results)
     {
         console.Print($"Accuracy: {Accuracy(results):0.0}%");
@@ -29,7 +22,7 @@ public class GameResults
 
         ConsoleTable
             .From(resultsToPrint)
-            .Configure(options => options.Columns = new List<string> { "#", "Question", "Guess", "Answer", "Time (sec.)" })
+            .Configure(options => options.Columns = ["#", "Question", "Guess", "Answer", "Time (sec.)"])
             .Write(Format.Minimal);
     }
 

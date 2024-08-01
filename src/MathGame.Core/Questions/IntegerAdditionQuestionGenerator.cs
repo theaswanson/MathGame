@@ -2,19 +2,11 @@ using MathGame.Core.Utilities;
 
 namespace MathGame.Core.Questions;
 
-public class IntegerAdditionQuestionGenerator : IIntegerAdditionQuestionGenerator
+public class IntegerAdditionQuestionGenerator(IRandomNumberGenerator rng) : IIntegerAdditionQuestionGenerator
 {
-    private readonly IRandomNumberGenerator rng;
-
-    public IntegerAdditionQuestionGenerator(IRandomNumberGenerator rng)
-    {
-        this.rng = rng;
-    }
-
     public IntegerAdditionQuestion Generate()
     {
-        var first = rng.Generate(1, 20);
-        var second = rng.Generate(1, 20);
+        var (first, second) = (rng.Generate(1, 20), rng.Generate(1, 20));
 
         return new IntegerAdditionQuestion
         {
