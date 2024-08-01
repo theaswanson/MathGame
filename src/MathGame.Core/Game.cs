@@ -3,9 +3,9 @@ using MathGame.Core.Questions;
 
 namespace MathGame.Core.Utilities;
 
-public class Game(IIntegerAdditionQuestionGenerator questionGenerator, IConsole console)
+public class Game<T>(IQuestionGenerator<T> questionGenerator, IConsole console) where T : IQuestion
 {
-    private readonly Dictionary<int, QuestionResult> questionHistory = [];
+    private readonly Dictionary<int, QuestionAndAnswer<IQuestion, int>> questionHistory = [];
 
     public void Play(int numberOfQuestions)
     {
@@ -24,7 +24,7 @@ public class Game(IIntegerAdditionQuestionGenerator questionGenerator, IConsole 
         results.Print(questionHistory);
     }
 
-    private QuestionResult AskQuestion()
+    private QuestionAndAnswer<IQuestion, int> AskQuestion()
     {
         var question = questionGenerator.Generate();
 
@@ -37,7 +37,7 @@ public class Game(IIntegerAdditionQuestionGenerator questionGenerator, IConsole 
 
         console.Print(question.IsCorrect(guess) ? "Correct!" : "Incorrect.");
 
-        return new QuestionResult(question, guess, stopwatch.Elapsed);
+        return new QuestionAndAnswer<IQuestion, int>(question, new Answer<int>(guess, stopwatch.Elapsed));
     }
 
     private int GetUserGuess()

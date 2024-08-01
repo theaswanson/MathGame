@@ -1,6 +1,6 @@
 namespace MathGame.Core.Questions;
 
-public interface IIntegerAdditionQuestionGenerator
+public interface IQuestionGenerator<T> where T : IQuestion
 {
-    IntegerAdditionQuestion Generate();
+    T Generate();
 }

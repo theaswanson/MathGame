@@ -2,7 +2,7 @@ using MathGame.Core.Utilities;
 
 namespace MathGame.Core.Questions;
 
-public class IntegerAdditionQuestionGenerator(IRandomNumberGenerator rng) : IIntegerAdditionQuestionGenerator
+public class IntegerAdditionQuestionGenerator(IRandomNumberGenerator rng) : IQuestionGenerator<IntegerAdditionQuestion>
 {
     public IntegerAdditionQuestion Generate()
     {

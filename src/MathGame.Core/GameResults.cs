@@ -6,18 +6,18 @@ namespace MathGame.Core;
 
 public class GameResults(IConsole console)
 {
-    public void Print(IDictionary<int, QuestionResult> results)
+    public void Print(IDictionary<int, QuestionAndAnswer<IQuestion, int>> results)
     {
-        console.Print($"Accuracy: {Accuracy(results):0.0}%");
-        console.Print($"Average time to guess: {AverageTimeToAnswer(results):0.0} seconds");
+        console.Print($"Accuracy: {Accuracy(results.Select(result => result.Value)):0.0}%");
+        console.Print($"Average time to guess: {AverageTimeToAnswer(results.Select(result => result.Value.Answer)):0.0} seconds");
 
         var resultsToPrint = results.Select(result => new QuestionResultOutput
         {
             QuestionNumber = result.Key,
             Prompt = result.Value.Question.Prompt,
-            Guess = result.Value.Guess,
+            Guess = result.Value.Answer.Guess,
             CorrectAnswer = result.Value.Question.CorrectAnswer,
-            TimeInSeconds = result.Value.TimeElapsed.TotalSeconds.ToString("0.0")
+            TimeInSeconds = result.Value.Answer.TimeElapsed.TotalSeconds.ToString("0.0")
         });
 
         ConsoleTable
@@ -26,12 +26,12 @@ public class GameResults(IConsole console)
             .Write(Format.Minimal);
     }
 
-    protected static decimal Accuracy(IDictionary<int, QuestionResult> results) =>
-        (decimal)CorrectAnswers(results) / results.Count * 100;
+    protected static decimal Accuracy(IEnumerable<QuestionAndAnswer<IQuestion, int>> results) =>
+        (decimal)CorrectAnswers(results) / results.Count() * 100;
 
-    protected static int CorrectAnswers(IDictionary<int, QuestionResult> results) =>
-        results.Values.Count(r => r.Guess == r.Question.CorrectAnswer);
+    protected static int CorrectAnswers(IEnumerable<QuestionAndAnswer<IQuestion, int>> results) =>
+        results.Count(result => result.Answer.Guess == result.Question.CorrectAnswer);
     
-    protected static double AverageTimeToAnswer(IDictionary<int, QuestionResult> results) =>
-        results.Values.Average(result => result.TimeElapsed.TotalSeconds);
+    protected static double AverageTimeToAnswer<T>(IEnumerable<Answer<T>> answers) =>
+        answers.Average(answer => answer.TimeElapsed.TotalSeconds);
 }
