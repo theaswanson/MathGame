@@ -1,4 +1,4 @@
-namespace MathGame.Core;
+namespace MathGame.Core.Utilities;
 
 public class Console : IConsole
 {

@@ -1,8 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-using MathGame.Core;
+﻿using MathGame.Core.Questions;
+using MathGame.Core.Utilities;
+using Console = MathGame.Core.Utilities.Console;
 
 var questionGenerator = new IntegerAdditionQuestionGenerator(new RandomNumberGenerator());
-var console = new MathGame.Core.Console();
+var console = new Console();
 
 var playAgain = false;
 do

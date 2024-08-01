@@ -1,4 +1,4 @@
-namespace MathGame.Core;
+namespace MathGame.Core.Questions;
 
 public class QuestionResult
 {
